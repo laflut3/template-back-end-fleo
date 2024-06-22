@@ -98,8 +98,9 @@ Veuillez vous assurer que votre code suit les normes de codage du projet et qu'i
 
 ## Équipe
 
-- **Florian Filloux** : Full Stack Developer, Scrum Master (Backend)
-- **Dorian Blanchet** : Product Owner (Frontend)
+- **Léo Torres** : Full Stack Developer, Scrum Master
+- **Florian Filloux** : Back end Developer, Product Owner
+- **Dorian Blanchet** : Frontend Developer
 - **FLEO-web** : Société de développement
 
 ## Licence
