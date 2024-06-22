@@ -82,6 +82,7 @@ ecommerce-project/
 │   ├── .env.example
 │   └── package.json
 └── README.md
+```
 
 ## Contribuer
 
