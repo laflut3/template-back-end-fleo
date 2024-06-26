@@ -1,10 +1,12 @@
-// server.js
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 const authRoutes = require('./User/route/auth');
+const authMiddleware = require('./middleware/auth');
 
 dotenv.config();
 
@@ -23,10 +25,18 @@ mongoose.connect(process.env.MONGODB_URI, {
     console.error('Error connecting to MongoDB Atlas:', error);
 });
 
-app.use('/auth', authRoutes);
+// Configurer les sessions
+app.use(session({
+    secret: process.env.SESSION_SECRET || 'secret',
+    resave: false,
+    saveUninitialized: false,
+    store: new MongoStore({ mongooseConnection: mongoose.connection })
+}));
 
 // Configurer le serveur pour servir les fichiers statiques
-app.use(express.static(path.join(__dirname, 'frontend')));
+app.use(express.static(path.join(__dirname, '../frontend')));
+
+app.use('/auth', authRoutes);
 
 // Route pour la racine
 app.get('/', (req, res) => {
@@ -41,6 +51,11 @@ app.get('/login', (req, res) => {
 // Route pour la page de création de compte
 app.get('/register', (req, res) => {
     res.sendFile(path.join(__dirname, 'User/view/register.html'));
+});
+
+// Route protégée
+app.get('/dashboard', authMiddleware, (req, res) => {
+    res.send('This is the dashboard. You are logged in.');
 });
 
 app.listen(port, () => {

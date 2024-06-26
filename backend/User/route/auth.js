@@ -1,11 +1,8 @@
 // User/route/auth.js
 const express = require('express');
 const router = express.Router();
-const User = require('../model/User'); // Assurez-vous que ce chemin est correct
-const jwt = require('jsonwebtoken');
+const User = require('../model/User');
 const bcrypt = require('bcrypt');
-
-const JWT_SECRET = process.env.JWT_SECRET;
 
 // Route pour l'inscription
 router.post('/register', async (req, res) => {
@@ -31,12 +28,36 @@ router.post('/login', async (req, res) => {
         if (!isMatch) {
             return res.status(401).send('Invalid username or password');
         }
-        const token = jwt.sign({ id: user._id, username: user.username }, JWT_SECRET, {
-            expiresIn: '1h',
-        });
-        res.json({ token });
+
+        // Créer une session pour l'utilisateur
+        req.session.userId = user._id;
+        req.session.username = user.username;
+
+        res.send('Login successful');
     } catch (error) {
         res.status(500).send(error.message);
+    }
+});
+
+// Route pour la déconnexion
+router.post('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            return res.status(500).send(err.message);
+        }
+        res.send('Logout successful');
+    });
+});
+
+// Route pour vérifier la session
+router.get('/session', (req, res) => {
+    if (req.session.userId) {
+        res.json({
+            userId: req.session.userId,
+            username: req.session.username
+        });
+    } else {
+        res.status(401).send('Not authenticated');
     }
 });
 
