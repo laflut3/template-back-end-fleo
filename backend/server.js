@@ -1,4 +1,5 @@
 // server.js
+// server.js
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
@@ -6,6 +7,8 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+const authRoutes = require('./User/route/auth');
+const middleAuth = require('./User/middleware/middleAuth'); // Assurez-vous d'importer le middleware
 
 dotenv.config();
 
@@ -38,7 +41,7 @@ app.use(session({
 // Configurer le serveur pour servir les fichiers statiques
 app.use(express.static(path.join(__dirname, '../frontend')));
 
-app.use('/auth', require('./User/route/auth'));
+app.use('/auth', authRoutes);
 
 // Route pour la racine
 app.get('/', (req, res) => {
@@ -55,18 +58,13 @@ app.get('/register', (req, res) => {
     res.sendFile(path.join(__dirname, 'User/view/register.html'));
 });
 
-// Route protégée
-app.get('/dashboard', require('./User/middleware/middleAuth.js'), (req, res) => {
-    res.send('This is the dashboard. You are logged in.');
+// Route pour la page du profil utilisateur
+app.get('/profile', middleAuth, (req, res) => { // Utilisez le middleware middleAuth
+    res.sendFile(path.join(__dirname, 'User/view/profile.html'));
 });
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
-});
-
-// Route pour la page du profil utilisateur
-app.get('/profile', authMiddleware, (req, res) => {
-    res.sendFile(path.join(__dirname, 'User/view/profile.html'));
 });
 
 

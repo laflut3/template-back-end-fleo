@@ -13,6 +13,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         lienLog.style.display = 'none';
         profile.style.display = 'flex';
         profileInitials.textContent = getInitials(user.firstName, user.lastName);
+
+        // Ajouter un gestionnaire d'événements pour rediriger vers /profile au clic
+        profile.addEventListener('click', function() {
+            window.location.href = '/profile';
+        });
     } catch (error) {
         console.error('Error fetching user info:', error.message);
     }
