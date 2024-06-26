@@ -25,9 +25,12 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 app.use('/auth', authRoutes);
 
+// Configurer le serveur pour servir les fichiers statiques
+app.use(express.static(path.join(__dirname, 'frontend')));
+
 // Route pour la racine
 app.get('/', (req, res) => {
-    res.send('Welcome to the User Management API');
+    res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
 
 // Route pour la page de connexion

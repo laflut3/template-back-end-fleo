@@ -8,15 +8,18 @@
   <link rel="stylesheet" href="/frontend/css/connexion.css">
 </head>
 <body>
+
 <header class="header">
   <h1>Créer un compte</h1>
 </header>
+
 <nav class="nav">
-  <a href="index.html">Accueil</a>
-  <a href="products.html">Produits</a>
-  <a href="contact.html">Contact</a>
-  <a href="about.html">À propos</a>
+  <a href="/">Accueil</a>
+  <a href="/products">Produits</a>
+  <a href="/contact">Contact</a>
+  <a href="/about">À propos</a>
 </nav>
+
 <div class="container">
   <form class="register-form" action="/auth/register" method="post">
     <h2>Inscription</h2>
@@ -27,11 +30,13 @@
     <label for="password">Mot de passe</label>
     <input type="password" id="password" name="password" required>
     <button type="submit">Créer un compte</button>
-    <p>Déjà un compte ? <a href="login.html">Se connecter</a></p>
+    <p>Déjà un compte ? <a href="/login">Se connecter</a></p>
   </form>
 </div>
+
 <footer class="footer">
   <p>&copy; 2024 Site E-Commerce Basique</p>
 </footer>
+
 </body>
 </html>
