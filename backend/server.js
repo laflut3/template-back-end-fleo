@@ -46,3 +46,12 @@ app.get('/register', (req, res) => {
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
+
+//Style -----> css
+app.get('/styleBase', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/css/styles.css'));
+});
+
+app.get('/styleConnexion', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/css/connexion.css'));
+});
