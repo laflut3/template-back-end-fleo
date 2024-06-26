@@ -1,10 +1,10 @@
+// server.js
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const authRoutes = require('/User/route/auth');
+const authRoutes = require('./User/route/auth'); // Assurez-vous que ce chemin est correct
 
-// Charger les variables d'environnement
 dotenv.config();
 
 const app = express();

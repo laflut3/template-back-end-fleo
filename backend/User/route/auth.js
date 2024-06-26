@@ -1,7 +1,7 @@
-// routes/auth.js
+// User/route/auth.js
 const express = require('express');
 const router = express.Router();
-const User = require('/backend/User/model/User');
+const User = require('../model/User'); // Assurez-vous que ce chemin est correct
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
