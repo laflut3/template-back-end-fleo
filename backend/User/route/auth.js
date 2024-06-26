@@ -7,10 +7,10 @@ const bcrypt = require('bcrypt');
 // Route pour l'inscription
 router.post('/register', async (req, res) => {
     try {
-        const { username, email, password } = req.body;
-        const user = new User({ username, email, password });
+        const { username, email, password, firstName, lastName } = req.body;
+        const user = new User({ username, email, password, firstName, lastName });
         await user.save();
-        res.status(201).send('User registered successfully');
+        res.status(201).redirect('/login');
     } catch (error) {
         res.status(400).send(error.message);
     }
@@ -33,7 +33,7 @@ router.post('/login', async (req, res) => {
         req.session.userId = user._id;
         req.session.username = user.username;
 
-        res.send('Login successful');
+        res.redirect('/');
     } catch (error) {
         res.status(500).send(error.message);
     }
@@ -58,6 +58,22 @@ router.get('/session', (req, res) => {
         });
     } else {
         res.status(401).send('Not authenticated');
+    }
+});
+
+// Route pour obtenir les informations de l'utilisateur connecté
+router.get('/user-info', async (req, res) => {
+    if (!req.session.userId) {
+        return res.status(401).send('Not authenticated');
+    }
+    try {
+        const user = await User.findById(req.session.userId).select('firstName lastName');
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+        res.json(user);
+    } catch (error) {
+        res.status(500).send(error.message);
     }
 });
 

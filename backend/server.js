@@ -64,6 +64,11 @@ app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
 
+// Route pour la page du profil utilisateur
+app.get('/profile', authMiddleware, (req, res) => {
+    res.sendFile(path.join(__dirname, 'User/view/profile.html'));
+});
+
 
 //Style -----> css
 app.get('/styleBase', (req, res) => {
