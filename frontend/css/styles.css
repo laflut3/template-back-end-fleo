@@ -87,3 +87,27 @@ body {
     width: 100%;
     bottom: 0;
 }
+
+.nav-container {
+    display: flex;
+    justify-content: flex-start; /* Aligne tout à gauche */
+    padding: 10px;
+    background-color: #f0f0f0; /* Une couleur de fond pour vérifier l'espacement */
+}
+
+#BlocLog {
+    position: absolute; /* Position absolue pour le coller à gauche de la page */
+    top: 10px; /* Ajustez la valeur pour l'espacement vertical */
+    left: 10px; /* Ajustez la valeur pour l'espacement horizontal */
+    display: flex;
+    align-items: center;
+    background-color: #333;
+    padding: 10px;
+    margin: 10px;
+    z-index: 1000; /* Assurez-vous qu'il est au-dessus d'autres éléments */
+}
+
+#lienLog {
+    text-decoration: none;
+    color: white; /* Couleur du texte pour qu'il soit visible sur le fond sombre */
+}
