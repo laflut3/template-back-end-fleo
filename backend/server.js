@@ -1,12 +1,11 @@
+// server.js
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
-const authRoutes = require('./User/route/auth');
-const authMiddleware = require('./middleware/auth');
+const MongoStore = require('connect-mongo');
 
 dotenv.config();
 
@@ -30,13 +29,16 @@ app.use(session({
     secret: process.env.SESSION_SECRET || 'secret',
     resave: false,
     saveUninitialized: false,
-    store: new MongoStore({ mongooseConnection: mongoose.connection })
+    store: MongoStore.create({
+        mongoUrl: process.env.MONGODB_URI,
+        ttl: 14 * 24 * 60 * 60 // = 14 jours. Vous pouvez ajuster selon vos besoins
+    })
 }));
 
 // Configurer le serveur pour servir les fichiers statiques
 app.use(express.static(path.join(__dirname, '../frontend')));
 
-app.use('/auth', authRoutes);
+app.use('/auth', require('./User/route/auth'));
 
 // Route pour la racine
 app.get('/', (req, res) => {
@@ -54,13 +56,14 @@ app.get('/register', (req, res) => {
 });
 
 // Route protégée
-app.get('/dashboard', authMiddleware, (req, res) => {
+app.get('/dashboard', require('./User/middleware/middleAuth.js'), (req, res) => {
     res.send('This is the dashboard. You are logged in.');
 });
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
+
 
 //Style -----> css
 app.get('/styleBase', (req, res) => {
