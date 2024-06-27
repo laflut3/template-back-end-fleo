@@ -66,8 +66,9 @@ router.get('/user-info', async (req, res) => {
     if (!req.session.userId) {
         return res.status(401).send('Not authenticated');
     }
+
     try {
-        const user = await User.findById(req.session.userId).select('firstName lastName');
+        const user = await User.findById(req.session.userId).select('username email firstName lastName');
         if (!user) {
             return res.status(404).send('User not found');
         }

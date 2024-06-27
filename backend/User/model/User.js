@@ -24,6 +24,9 @@ const userSchema = new mongoose.Schema({
     lastName: {
         type: String,
         required: true
+    },
+    profileImage: {
+        type: Buffer // Champ pour stocker l'image en tant que BLOB
     }
 });
 

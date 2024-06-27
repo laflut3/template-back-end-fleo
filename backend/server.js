@@ -1,5 +1,4 @@
 // server.js
-// server.js
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
@@ -59,11 +58,11 @@ app.get('/register', (req, res) => {
 });
 
 // Route pour la page du profil utilisateur
-app.get('/profile', middleAuth, (req, res) => { // Utilisez le middleware middleAuth
+app.get('/profile', middleAuth, (req, res) => {
     res.sendFile(path.join(__dirname, 'User/view/profile.html'));
 });
 
-app.listen(port, () => {
+app.listen(port, '0.0.0.0', () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
 
