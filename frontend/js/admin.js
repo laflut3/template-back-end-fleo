@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const productInfo = document.createElement('div');
             productInfo.innerHTML = `
-                <img src="data:image/jpeg;base64,${btoa(
+                <img src="data:image/png;base64,${btoa(
                 new Uint8Array(product.image.data)
                     .reduce((data, byte) => data + String.fromCharCode(byte), '')
             )}" alt="${product.name}">
@@ -38,23 +38,24 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // Afficher les produits lors du chargement de la page
-    displayProducts();
+    addProductForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-    // Ajouter un nouveau produit
-    addProductForm.addEventListener('submit', async (event) => {
-        event.preventDefault();
         const formData = new FormData(addProductForm);
-        const response = await fetch('/products/add', {
-            method: 'POST',
-            body: formData
-        });
-        if (response.ok) {
-            alert('Produit ajouté avec succès');
+        try {
+            const response = await fetch('/products/add', {
+                method: 'POST',
+                body: formData,
+            });
+            if (!response.ok) {
+                throw new Error('Failed to add product');
+            }
             addProductForm.reset();
             displayProducts();
-        } else {
-            alert('Erreur lors de l\'ajout du produit');
+        } catch (error) {
+            console.error('Error:', error.message);
         }
     });
+
+    displayProducts();
 });

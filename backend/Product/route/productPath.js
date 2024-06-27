@@ -8,12 +8,16 @@ const upload = multer({ storage: multer.memoryStorage() });
 // Route pour ajouter un produit
 router.post('/add', middleAuth.estAdmin, upload.single('image'), async (req, res) => {
     try {
+        console.log(req.body); // Log the received data
+        console.log(req.file); // Log the uploaded file data
+
         const { name, description, price } = req.body;
         const image = req.file ? req.file.buffer : null;
         const product = new Product({ name, description, price, image });
         await product.save();
         res.status(201).send('Product added successfully');
     } catch (error) {
+        console.error(error); // Log the error for debugging
         res.status(400).send(error.message);
     }
 });

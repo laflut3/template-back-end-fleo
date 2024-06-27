@@ -8,7 +8,7 @@ const MongoStore = require('connect-mongo');
 const authRoutes = require('./User/route/auth');
 const productRoutes = require('./Product/route/productPath'); // Assurez-vous que le chemin est correct
 const middleAuth = require('./User/middleware/middleAuth');
-const { estAdmin } = require('./User/middleware/middleAuth');
+const { estAdmin } = require('./User/middleware/middleAuth'); // Modifier ici
 
 dotenv.config();
 
