@@ -1,21 +1,16 @@
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-        const response = await fetch('/auth/session');
+        const response = await fetch('/auth/user-info');
         if (!response.ok) {
             throw new Error('Not authenticated');
         }
-        const session = await response.json();
-
-        const userResponse = await fetch('/auth/user-info');
-        if (!userResponse.ok) {
-            throw new Error('Not authenticated');
-        }
-        const user = await userResponse.json();
+        const user = await response.json();
 
         const lienLog = document.getElementById('lienLog');
         const profile = document.getElementById('profile');
         const profileInitials = document.getElementById('profile-initials');
         const profileImage = document.getElementById('profile-image');
+        const adminLink = document.getElementById('adminLink');
 
         lienLog.style.display = 'none';
         profile.style.display = 'flex';
@@ -31,6 +26,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             profileInitials.textContent = getInitials(user.firstName, user.lastName);
             profileImage.classList.add('hidden');
             profileInitials.classList.remove('hidden');
+        }
+
+        if (user.estAdmin) {
+            adminLink.style.display = 'inline';
         }
 
         profile.addEventListener('click', function() {

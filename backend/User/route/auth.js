@@ -3,20 +3,22 @@ const router = express.Router();
 const User = require('../model/User');
 const bcrypt = require('bcrypt');
 const multer = require('multer');
-const upload = multer({ storage: multer.memoryStorage() }); // Stockage en mémoire pour l'image
+const upload = multer({ storage: multer.memoryStorage() });
+const middleAuth = require('../middleware/middleAuth'); // Importation de middleAuth
 
 // Route pour l'inscription
 router.post('/register', upload.single('profileImage'), async (req, res) => {
     try {
-        const { username, email, password, firstName, lastName, isAdmin } = req.body;
+        const { username, email, password, firstName, lastName } = req.body;
         const profileImage = req.file ? req.file.buffer : null;
+        const estAdmin = false ;
 
         // Restreindre l'accès à la création d'un administrateur
-        if (isAdmin && (!req.session.userId || !(await User.findById(req.session.userId)).isAdmin)) {
+        if (estAdmin && (!req.session.userId || !(await User.findById(req.session.userId)).estAdmin)) {
             return res.status(403).send('Unauthorized to create admin user');
         }
 
-        const user = new User({ username, email, password, firstName, lastName, profileImage, isAdmin });
+        const user = new User({ username, email, password, firstName, lastName, profileImage });
         await user.save();
         res.status(201).send('User registered successfully');
     } catch (error) {
@@ -41,7 +43,7 @@ router.post('/login', async (req, res) => {
         req.session.userId = user._id;
         req.session.username = user.username;
 
-        res.redirect('/');
+        res.send('Login successful');
     } catch (error) {
         res.status(500).send(error.message);
     }
@@ -76,7 +78,7 @@ router.get('/user-info', async (req, res) => {
     }
 
     try {
-        const user = await User.findById(req.session.userId).select('username email firstName lastName profileImage');
+        const user = await User.findById(req.session.userId).select('username email firstName lastName profileImage estAdmin');
         if (!user) {
             return res.status(404).send('User not found');
         }
@@ -104,28 +106,10 @@ router.post('/update-profile-image', upload.single('profileImage'), async (req, 
     }
 });
 
-// Route pour mettre à jour les privilèges d'un utilisateur
-router.patch('/update-privileges/:id', async (req, res) => {
-    if (!req.session.userId || !(await User.findById(req.session.userId)).isAdmin) {
-        return res.status(403).send('Unauthorized');
-    }
-
-    try {
-        const { isAdmin } = req.body;
-        const user = await User.findByIdAndUpdate(req.params.id, { isAdmin }, { new: true });
-        if (!user) {
-            return res.status(404).send('User not found');
-        }
-        res.json(user); // Renvoie l'utilisateur mis à jour
-    } catch (error) {
-        res.status(500).send(error.message);
-    }
-});
-
 // Route pour promouvoir un utilisateur en administrateur
-router.patch('/promote/:id', middleAuth.isAdmin, async (req, res) => {
+router.patch('/promote/:id', middleAuth.estAdmin, async (req, res) => {
     try {
-        const user = await User.findByIdAndUpdate(req.params.id, { isAdmin: true }, { new: true });
+        const user = await User.findByIdAndUpdate(req.params.id, { estAdmin: true }, { new: true });
         if (!user) {
             return res.status(404).send('User not found');
         }

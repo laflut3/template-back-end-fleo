@@ -6,9 +6,9 @@ const dotenv = require('dotenv');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const authRoutes = require('./User/route/auth');
-const productRoutes = require('./Product/route/product');
+const productRoutes = require('./Product/route/productPath'); // Assurez-vous que le chemin est correct
 const middleAuth = require('./User/middleware/middleAuth');
-const { isAdmin } = require('./User/middleware/middleAuth');
+const { estAdmin } = require('./User/middleware/middleAuth');
 
 dotenv.config();
 
@@ -65,8 +65,8 @@ app.get('/profile', middleAuth, (req, res) => {
 });
 
 // Route pour la page d'administration
-app.get('/admin', isAdmin, (req, res) => {
-    res.sendFile(path.join(__dirname, 'Product/view/admin.html'));
+app.get('/admin', estAdmin, (req, res) => {
+    res.sendFile(path.join(__dirname, 'Product/view/adminProduct.html'));
 });
 
 app.listen(port, '0.0.0.0', () => {
@@ -81,4 +81,8 @@ app.get('/styleBase', (req, res) => {
 
 app.get('/styleConnexion', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/css/connexion.css'));
+});
+
+app.get('/styleAdmin', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/css/admin.css'));
 });
