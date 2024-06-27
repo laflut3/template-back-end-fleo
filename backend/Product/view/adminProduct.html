@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration des Produits</title>
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+<header class="header">
+    <h1>Administration des Produits</h1>
+</header>
+
+<nav class="nav">
+    <a href="/">Accueil</a>
+    <a href="/products">Produits</a>
+    <a href="/contact">Contact</a>
+    <a href="/about">À propos</a>
+</nav>
+
+<div class="container">
+    <h2>Ajouter un Produit</h2>
+    <form id="addProductForm" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="name">Nom:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="price">Prix:</label>
+            <input type="number" id="price" name="price" required>
+        </div>
+        <div class="form-group">
+            <label for="image">Image:</label>
+            <input type="file" id="image" name="image" accept="image/*">
+        </div>
+        <button type="submit">Ajouter le produit</button>
+    </form>
+
+    <h2>Liste des Produits</h2>
+    <div id="productList"></div>
+</div>
+
+<footer class="footer">
+    <p>&copy; 2024 Site E-Commerce Basique</p>
+</footer>
+
+<script src="/js/admin.js"></script>
+</body>
+</html>

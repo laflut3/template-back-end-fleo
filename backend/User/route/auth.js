@@ -8,11 +8,17 @@ const upload = multer({ storage: multer.memoryStorage() }); // Stockage en mémo
 // Route pour l'inscription
 router.post('/register', upload.single('profileImage'), async (req, res) => {
     try {
-        const { username, email, password, firstName, lastName } = req.body;
+        const { username, email, password, firstName, lastName, isAdmin } = req.body;
         const profileImage = req.file ? req.file.buffer : null;
-        const user = new User({ username, email, password, firstName, lastName, profileImage });
+
+        // Restreindre l'accès à la création d'un administrateur
+        if (isAdmin && (!req.session.userId || !(await User.findById(req.session.userId)).isAdmin)) {
+            return res.status(403).send('Unauthorized to create admin user');
+        }
+
+        const user = new User({ username, email, password, firstName, lastName, profileImage, isAdmin });
         await user.save();
-        res.status(201).redirect('/login');
+        res.status(201).send('User registered successfully');
     } catch (error) {
         res.status(400).send(error.message);
     }
@@ -89,6 +95,37 @@ router.post('/update-profile-image', upload.single('profileImage'), async (req, 
     try {
         const profileImage = req.file ? req.file.buffer : null;
         const user = await User.findByIdAndUpdate(req.session.userId, { profileImage }, { new: true });
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+        res.json(user); // Renvoie l'utilisateur mis à jour
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
+
+// Route pour mettre à jour les privilèges d'un utilisateur
+router.patch('/update-privileges/:id', async (req, res) => {
+    if (!req.session.userId || !(await User.findById(req.session.userId)).isAdmin) {
+        return res.status(403).send('Unauthorized');
+    }
+
+    try {
+        const { isAdmin } = req.body;
+        const user = await User.findByIdAndUpdate(req.params.id, { isAdmin }, { new: true });
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+        res.json(user); // Renvoie l'utilisateur mis à jour
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
+
+// Route pour promouvoir un utilisateur en administrateur
+router.patch('/promote/:id', middleAuth.isAdmin, async (req, res) => {
+    try {
+        const user = await User.findByIdAndUpdate(req.params.id, { isAdmin: true }, { new: true });
         if (!user) {
             return res.status(404).send('User not found');
         }

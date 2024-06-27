@@ -6,7 +6,9 @@ const dotenv = require('dotenv');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const authRoutes = require('./User/route/auth');
-const middleAuth = require('./User/middleware/middleAuth'); // Assurez-vous d'importer le middleware
+const productRoutes = require('./Product/route/product');
+const middleAuth = require('./User/middleware/middleAuth');
+const { isAdmin } = require('./User/middleware/middleAuth');
 
 dotenv.config();
 
@@ -40,6 +42,7 @@ app.use(session({
 app.use(express.static(path.join(__dirname, '../frontend')));
 
 app.use('/auth', authRoutes);
+app.use('/products', productRoutes);
 
 // Route pour la racine
 app.get('/', (req, res) => {
@@ -59,6 +62,11 @@ app.get('/register', (req, res) => {
 // Route pour la page du profil utilisateur
 app.get('/profile', middleAuth, (req, res) => {
     res.sendFile(path.join(__dirname, 'User/view/profile.html'));
+});
+
+// Route pour la page d'administration
+app.get('/admin', isAdmin, (req, res) => {
+    res.sendFile(path.join(__dirname, 'Product/view/admin.html'));
 });
 
 app.listen(port, '0.0.0.0', () => {
