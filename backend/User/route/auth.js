@@ -68,7 +68,7 @@ router.get('/user-info', async (req, res) => {
     }
 
     try {
-        const user = await User.findById(req.session.userId).select('username email firstName lastName');
+        const user = await User.findById(req.session.userId).select('username email firstName lastName profileImage');
         if (!user) {
             return res.status(404).send('User not found');
         }
