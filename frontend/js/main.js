@@ -25,12 +25,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 new Uint8Array(user.profileImage.data)
                     .reduce((data, byte) => data + String.fromCharCode(byte), '')
             )}`;
-            profileImage.style.display = 'block';
-            profileInitials.style.display = 'none';
+            profileImage.classList.remove('hidden');
+            profileInitials.classList.add('hidden');
         } else {
             profileInitials.textContent = getInitials(user.firstName, user.lastName);
-            profileImage.style.display = 'none';
-            profileInitials.style.display = 'block';
+            profileImage.classList.add('hidden');
+            profileInitials.classList.remove('hidden');
         }
 
         profile.addEventListener('click', function() {

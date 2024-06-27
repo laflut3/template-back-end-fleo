@@ -21,9 +21,9 @@
 <div class="container">
     <div id="user-info">
         <h2>Informations de l'utilisateur</h2>
-        <div style="position: relative; width: 150px; height: 150px;">
-            <img id="profileImage" alt="Image de profil" style="max-width: 150px; max-height: 150px; display: none;">
-            <div id="profileInitials" style="width: 150px; height: 150px; display: flex; align-items: center; justify-content: center; font-size: 50px; background-color: #ddd; border-radius: 50%;"></div>
+        <div class="profile-image-container">
+            <img id="profileImage" class="profile-image hidden" alt="Image de profil">
+            <div id="profileInitials" class="profile-initials hidden"></div>
         </div>
         <form id="uploadForm" enctype="multipart/form-data">
             <label for="profileImageInput">Télécharger une nouvelle image de profil:</label>

@@ -1,14 +1,16 @@
-// User/route/auth.js
 const express = require('express');
 const router = express.Router();
 const User = require('../model/User');
 const bcrypt = require('bcrypt');
+const multer = require('multer');
+const upload = multer({ storage: multer.memoryStorage() }); // Stockage en mémoire pour l'image
 
 // Route pour l'inscription
-router.post('/register', async (req, res) => {
+router.post('/register', upload.single('profileImage'), async (req, res) => {
     try {
         const { username, email, password, firstName, lastName } = req.body;
-        const user = new User({ username, email, password, firstName, lastName });
+        const profileImage = req.file ? req.file.buffer : null;
+        const user = new User({ username, email, password, firstName, lastName, profileImage });
         await user.save();
         res.status(201).redirect('/login');
     } catch (error) {
@@ -73,6 +75,24 @@ router.get('/user-info', async (req, res) => {
             return res.status(404).send('User not found');
         }
         res.json(user);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
+
+// Route pour mettre à jour la photo de profil
+router.post('/update-profile-image', upload.single('profileImage'), async (req, res) => {
+    if (!req.session.userId) {
+        return res.status(401).send('Not authenticated');
+    }
+
+    try {
+        const profileImage = req.file ? req.file.buffer : null;
+        const user = await User.findByIdAndUpdate(req.session.userId, { profileImage }, { new: true });
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+        res.json(user); // Renvoie l'utilisateur mis à jour
     } catch (error) {
         res.status(500).send(error.message);
     }
