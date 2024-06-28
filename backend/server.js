@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+const cors = require('cors');
 const authRoutes = require('./User/route/auth');
 const productRoutes = require('./Product/route/productPath'); // Assurez-vous que le chemin est correct
 const middleAuth = require('./User/middleware/middleAuth');
@@ -17,8 +18,10 @@ dotenv.config();
 const app = express();
 const port = 3000;
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
 
 mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
