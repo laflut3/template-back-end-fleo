@@ -11,7 +11,7 @@ const productRoutes = require('./Product/route/productPath'); // Assurez-vous qu
 const middleAuth = require('./User/middleware/middleAuth');
 const { estAdmin } = require('./User/middleware/middleAuth'); // Modifier ici
 const cartRoutes = require('./User/route/panierPath');
-// const contactRoutes = require('./User/route/contact'); // Ajoutez cette ligne
+const contactRoutes = require('./User/route/contact'); // Ajoutez cette ligne
 
 dotenv.config();
 
@@ -21,7 +21,6 @@ const port = 3000;
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
 
 mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
@@ -49,7 +48,12 @@ app.use(express.static(path.join(__dirname, '../frontend')));
 app.use('/auth', authRoutes);
 app.use('/products', productRoutes);
 app.use('/cart', cartRoutes); // Ajoutez cette ligne
-// app.use('/contact', contactRoutes); // Ajoutez cette ligne
+app.use('/contact', contactRoutes);
+
+// Route pour la page de contact
+app.get('/contact', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/contact.html'));
+});
 
 // Route pour la racine
 app.get('/', (req, res) => {
