@@ -1,0 +1,23 @@
+.testimonials-slider {
+    display: flex;
+    overflow: hidden;
+}
+
+.testimonials-slider>div {
+    flex: none;
+    width: 80%;
+    min-width: 300px;
+    padding: 0 16px;
+    box-sizing: border-box;
+    animation: scroll 10s linear infinite;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(calc(-100% + 16px));
+    }
+}

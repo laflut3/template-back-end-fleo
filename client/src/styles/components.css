@@ -1,0 +1,25 @@
+.iconFunny{
+    border-radius: 54%;
+    border: #000 solid 2px;
+}
+
+.special-checkbox {
+    @apply w-3 h-3 border-2 border-gray-600 rounded outline-none transition duration-300;
+}
+
+.special-checkbox:hover {
+    @apply outline-white;
+}
+
+.special-checkbox:checked {
+    @apply bg-blue-500 border-blue-500;
+}
+
+@keyframes reveal {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
