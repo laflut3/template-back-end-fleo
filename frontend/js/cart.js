@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-        const response = await fetch('/cart');
+        const response = await fetch('/cart/item');
         const cart = await response.json();
 
         const cartList = document.getElementById('cartList');

@@ -5,7 +5,7 @@ const Product = require('../../Product/model/product');
 const middleAuth = require('../middleware/middleAuth');
 
 // Route pour obtenir le panier de l'utilisateur
-router.get('/', middleAuth, async (req, res) => {
+router.get('/item', middleAuth, async (req, res) => {
     try {
         const cart = await Cart.findOne({ user: req.session.userId }).populate('items.product');
         res.json(cart);
