@@ -20,7 +20,7 @@ router.post('/register', upload.single('profileImage'), async (req, res) => {
 
         const user = new User({ username, email, password, firstName, lastName, profileImage });
         await user.save();
-        res.status(201).send('User registered successfully');
+        res.status(201).redirect('/login');
     } catch (error) {
         res.status(400).send(error.message);
     }
@@ -43,7 +43,7 @@ router.post('/login', async (req, res) => {
         req.session.userId = user._id;
         req.session.username = user.username;
 
-        res.send('Login successful');
+        res.redirect('/');
     } catch (error) {
         res.status(500).send(error.message);
     }
@@ -76,7 +76,6 @@ router.get('/user-info', async (req, res) => {
     if (!req.session.userId) {
         return res.status(401).send('Not authenticated');
     }
-
     try {
         const user = await User.findById(req.session.userId).select('username email firstName lastName profileImage estAdmin');
         if (!user) {

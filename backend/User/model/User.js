@@ -28,7 +28,6 @@ const userSchema = new mongoose.Schema({
     profileImage: {
         type: Buffer // Champ pour stocker l'image en tant que BLOB
     },
-
     estAdmin: {
         type: Boolean,
         default: false

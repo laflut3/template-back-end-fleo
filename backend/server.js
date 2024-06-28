@@ -9,6 +9,7 @@ const authRoutes = require('./User/route/auth');
 const productRoutes = require('./Product/route/productPath'); // Assurez-vous que le chemin est correct
 const middleAuth = require('./User/middleware/middleAuth');
 const { estAdmin } = require('./User/middleware/middleAuth'); // Modifier ici
+const cartRoutes = require('./User/route/cart');
 
 dotenv.config();
 
@@ -68,6 +69,9 @@ app.get('/profile', middleAuth, (req, res) => {
 app.get('/admin', estAdmin, (req, res) => {
     res.sendFile(path.join(__dirname, 'Product/view/adminProduct.html'));
 });
+
+app.use('/cart', cartRoutes)
+
 
 app.listen(port, '0.0.0.0', () => {
     console.log(`Server is running on http://localhost:${port}`);

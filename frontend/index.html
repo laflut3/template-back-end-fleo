@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Site E-Commerce Basique</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/styleBase">
 </head>
 
 <body>
@@ -21,6 +21,7 @@
             <div id="profile-initials" class="profile-initials hidden"></div>
         </div>
     </div>
+    <a href="/cart.html" id="cartLink" class="cart-link">Panier</a>
 </div>
 
 <div class="nav">
@@ -28,39 +29,11 @@
     <a href="/products">Produits</a>
     <a href="/contact">Contact</a>
     <a href="/about">À propos</a>
-    <a href="/admin" id="adminLink" style="display: none;">Admin</a> <!-- Lien d'administration -->
+    <a href="/admin" id="adminLink" style="display: none;">Admin</a>
 </div>
 
-<div class="container">
-<!--    <div class="product">-->
-<!--        <img src="https://via.placeholder.com/200" alt="Produit 1">-->
-<!--        <div class="product-details">-->
-<!--            <h2 class="product-title">Produit 1</h2>-->
-<!--            <p class="product-price">€29.99</p>-->
-<!--            <p class="product-description">Description du produit 1. Ce produit est de haute qualité et très utile.</p>-->
-<!--            <button class="add-to-cart">Ajouter au panier</button>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    <div class="product">-->
-<!--        <img src="https://via.placeholder.com/200" alt="Produit 2">-->
-<!--        <div class="product-details">-->
-<!--            <h2 class="product-title">Produit 2</h2>-->
-<!--            <p class="product-price">€49.99</p>-->
-<!--            <p class="product-description">Description du produit 2. Ce produit est de haute qualité et très utile.</p>-->
-<!--            <button class="add-to-cart">Ajouter au panier</button>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    <div class="product">-->
-<!--        <img src="https://via.placeholder.com/200" alt="Produit 3">-->
-<!--        <div class="product-details">-->
-<!--            <h2 class="product-title">Produit 3</h2>-->
-<!--            <p class="product-price">€19.99</p>-->
-<!--            <p class="product-description">Description du produit 3. Ce produit est de haute qualité et très utile.</p>-->
-<!--            <button class="add-to-cart">Ajouter au panier</button>-->
-<!--        </div>-->
-<!--    </div>-->
+<div class="container" id="productList">
+    <!-- Les produits seront ajoutés ici par le script JavaScript -->
 </div>
 
 <footer class="footer">
