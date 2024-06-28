@@ -1,3 +1,5 @@
+
+/*server.js*/
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
@@ -16,7 +18,7 @@ const cartRoutes = require('./User/route/panierPath');
 dotenv.config();
 
 const app = express();
-const port = 3000;
+const port = 5000;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -43,63 +45,12 @@ app.use(session({
     })
 }));
 
-// Configurer le serveur pour servir les fichiers statiques
-app.use(express.static(path.join(__dirname, '../frontend')));
 
-app.use('/auth', authRoutes);
-app.use('/products', productRoutes);
+app.use('/api', productRoutes);
+/*app.use('/auth', authRoutes);
 app.use('/cart', cartRoutes); // Ajoutez cette ligne
-// app.use('/contact', contactRoutes); // Ajoutez cette ligne
-
-// Route pour la racine
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/index.html'));
-});
-
-// Route pour la page de connexion
-app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, 'User/view/login.html'));
-});
-
-// Route pour la page de création de compte
-app.get('/register', (req, res) => {
-    res.sendFile(path.join(__dirname, 'User/view/register.html'));
-});
-
-// Route pour la page du profil utilisateur
-app.get('/profile', middleAuth, (req, res) => {
-    res.sendFile(path.join(__dirname, 'User/view/profile.html'));
-});
-
-// Route pour la page d'administration
-app.get('/admin', estAdmin, (req, res) => {
-    res.sendFile(path.join(__dirname, 'Product/view/adminProduct.html'));
-});
-
-// // Route pour la page de contact
-// app.get('/contact', (req, res) => {
-//     res.sendFile(path.join(__dirname, '../frontend/contact.html'));
-// });
-
-// Route pour la page de panier
-app.get('/cart', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/cart.html'));
-});
-
+*/
 
 app.listen(port, '0.0.0.0', () => {
     console.log(`Server is running on http://localhost:${port}`);
-});
-
-//Style -----> css
-app.get('/styleBase', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/css/styles.css'));
-});
-
-app.get('/styleConnexion', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/css/connexion.css'));
-});
-
-app.get('/styleAdmin', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/css/admin.css'));
 });

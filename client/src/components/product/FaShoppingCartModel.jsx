@@ -10,10 +10,10 @@ function FaShoppingCartModel({count}) {
     return (
         <>
             <span style={{ position: 'relative' }}>
-                <div style={{ position: 'absolute', top: '-10px', right: '-10px', backgroundColor: 'red', borderRadius: '50%', width: '20px', height: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <div style={{ position: 'absolute', right: '-10px', backgroundColor: 'red', borderRadius: '50%', width: '20px', height: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <p style={{ fontSize: '12px', color: 'white', margin: '0' }}>{count}</p>
                 </div>
-                <FaShoppingCart className='text-3xl text-black' />
+                <FaShoppingCart className="text-3xl text-white"style={{ marginTop: '10px' }} />
             </span>
         </>
     );
@@ -26,7 +26,7 @@ function FaShoppingCartModel({count}) {
  * @property {number} [count] - Nombre de produits dans le panier.
  */
 FaShoppingCartModel.prototype = {
-    count: PropTypes.number
+    count: PropTypes.number,
 }
 
 export default FaShoppingCartModel;

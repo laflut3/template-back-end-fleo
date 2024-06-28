@@ -24,7 +24,7 @@ const NavbarComponent = () => {
                     >
                         <IoMenu className="text-white" size={24} />
                     </button>
-                    <ul className={`absolute top-full right-0 bg-gray-800 lg:hidden ${isOpen ? 'block' : 'hidden'} mt-2 py-2 px-0 border border-white`}>
+                    <ul className={`absolute top-full  bg-gray-800 lg:hidden ${isOpen ? 'block' : 'hidden'} mt-2 py-2 px-0 border border-white`}>
                         <li className="nav-item">
                             <a href="/" className="block px-6 py-2 text-sm text-white hover:opacity-75">Page1</a>
                         </li>
@@ -39,7 +39,7 @@ const NavbarComponent = () => {
                         </li>
                     </ul>
                 </div>
-                <ul className="hidden lg:flex flex-col lg:flex-row list-none lg:ml-auto">
+                <ul className="hidden lg:flex flex-col lg:flex-row list-none lg:ml-auto mr-10">
                     <li className="nav-item">
                         <a href="/" className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75">Page1</a>
                     </li>

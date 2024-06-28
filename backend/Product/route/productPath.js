@@ -1,3 +1,4 @@
+/* route/productPath.js */
 const express = require('express');
 const router = express.Router();
 const Product = require('../model/product');
@@ -6,7 +7,7 @@ const multer = require('multer');
 const upload = multer({ storage: multer.memoryStorage() });
 
 // Route pour ajouter un produit
-router.post('/add', middleAuth.estAdmin, upload.single('image'), async (req, res) => {
+router.post('products/add', middleAuth.estAdmin, upload.single('image'), async (req, res) => {
     try {
         console.log(req.body); // Log the received data
         console.log(req.file); // Log the uploaded file data
@@ -22,8 +23,9 @@ router.post('/add', middleAuth.estAdmin, upload.single('image'), async (req, res
     }
 });
 
+
 // Route pour supprimer un produit
-router.delete('/delete/:id', middleAuth.estAdmin, async (req, res) => {
+router.delete('products/delete/:id', middleAuth.estAdmin, async (req, res) => {
     try {
         const product = await Product.findByIdAndDelete(req.params.id);
         if (!product) {
@@ -36,11 +38,14 @@ router.delete('/delete/:id', middleAuth.estAdmin, async (req, res) => {
 });
 
 // Route pour obtenir tous les produits
-router.get('/', async (req, res) => {
+router.get('/products', async (req, res) => {
     try {
+        console.log('Fetching products...');
         const products = await Product.find();
+        console.log('Products fetched successfully.');
         res.json(products);
     } catch (error) {
+        console.error('Error fetching products:', error);
         res.status(500).send(error.message);
     }
 });
