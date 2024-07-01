@@ -34,6 +34,7 @@ const userSchema = new mongoose.Schema({
     }
 
 });
+userSchema.index({ username: 1 });
 
 userSchema.pre('save', async function (next) {
     if (this.isModified('password') || this.isNew) {

@@ -4,22 +4,21 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const session = require('express-session');
-const MongoStore = require('connect-mongo');
-const cors = require('cors');
+const RedisStore = require('connect-redis').default;
+const { createClient } = require('redis');
 const authRoutes = require('./User/route/auth');
-const productRoutes = require('./Product/route/productPath'); // Assurez-vous que le chemin est correct
+const productRoutes = require('./Product/route/productPath');
 const middleAuth = require('./User/middleware/middleAuth');
-const { estAdmin } = require('./User/middleware/middleAuth'); // Modifier ici
+const { estAdmin } = require('./User/middleware/middleAuth');
 const cartRoutes = require('./User/route/panierPath');
 const contactRoutes = require('./User/route/contact');
-const reviewRoutes = require('./Product/route/reviewPath');
+const testimonialRoutes = require('./User/route/testimonialPath'); // Assurez-vous que le chemin est correct
 
 dotenv.config();
 
 const app = express();
 const port = 3000;
 
-app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -32,73 +31,67 @@ mongoose.connect(process.env.MONGODB_URI, {
     console.error('Error connecting to MongoDB Atlas:', error);
 });
 
-// Configurer les sessions
+// Configurer Redis client
+const redisClient = createClient({
+    url: process.env.REDIS_URL
+});
+redisClient.connect().catch(console.error);
+
+// Configurer les sessions avec Redis
 app.use(session({
+    store: new RedisStore({ client: redisClient }),
     secret: process.env.SESSION_SECRET || 'secret',
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({
-        mongoUrl: process.env.MONGODB_URI,
-        ttl: 14 * 24 * 60 * 60 // = 14 jours. Vous pouvez ajuster selon vos besoins
-    })
 }));
 
-// Configurer le serveur pour servir les fichiers statiques
 app.use(express.static(path.join(__dirname, '../frontend')));
 
 app.use('/auth', authRoutes);
 app.use('/products', productRoutes);
-app.use('/cart', cartRoutes); // Ajoutez cette ligne
+app.use('/cart', cartRoutes);
 app.use('/contact', contactRoutes);
-app.use('/reviews', reviewRoutes);
+app.use('/testimonials', testimonialRoutes);
 
-// Route pour la page de contact
-app.get('/contact', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/contact.html'));
-});
-
-// Route pour la racine
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
 
-// Route pour la page de connexion
 app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, 'User/view/login.html'));
 });
 
-// Route pour la page de création de compte
 app.get('/register', (req, res) => {
     res.sendFile(path.join(__dirname, 'User/view/register.html'));
 });
 
-// Route pour la page du profil utilisateur
 app.get('/profile', middleAuth, (req, res) => {
     res.sendFile(path.join(__dirname, 'User/view/profile.html'));
 });
 
-// Route pour la page d'administration
 app.get('/admin', estAdmin, (req, res) => {
     res.sendFile(path.join(__dirname, 'Product/view/adminProduct.html'));
 });
 
-// Route pour la page de panier
-app.get('/cart', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/cart.html'));
+app.get('/admin', estAdmin, (req, res) => {
+    res.sendFile(path.join(__dirname, 'Product/view/adminProduct.html'));
 });
 
-// Route pour la page À propos
+app.get('/contact', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/contact.html'));
+
+});
+
 app.get('/about', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/about.html'));
 });
-
 
 app.listen(port, '0.0.0.0', () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
 
 
-//Style -----> css
+
 app.get('/styleBase', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/css/styles.css'));
 });

@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>À propos</title>
+    <title>About Us</title>
     <link rel="stylesheet" href="/styleBase">
 </head>
 
 <body>
 <header class="header">
-    <h1>À propos de nous</h1>
+    <h1>About Us</h1>
 </header>
 
 <div id="BlocLog">
@@ -32,22 +32,14 @@
 </div>
 
 <div class="container">
-    <section class="about-section">
-        <h2>Qui sommes-nous ?</h2>
-        <p>Nous sommes une entreprise dédiée à fournir des produits de haute qualité à nos clients. Notre mission est de rendre le shopping en ligne facile et agréable.</p>
-    </section>
-    <section class="testimonial-section">
-        <h2>Témoignages</h2>
-        <div class="testimonial-form">
-            <form id="reviewForm">
-                <textarea id="reviewContent" placeholder="Votre avis"></textarea>
-                <button type="submit">Poster</button>
-            </form>
-        </div>
-        <div id="reviews">
-            <!-- Les avis seront ajoutés ici par le script JavaScript -->
-        </div>
-    </section>
+    <h2>Nos Témoignages</h2>
+    <div id="testimonialsList">
+        <!-- Les témoignages seront ajoutés ici par JavaScript -->
+    </div>
+    <form id="addTestimonialForm">
+        <textarea id="testimonialContent" required></textarea>
+        <button type="submit">Ajouter un témoignage</button>
+    </form>
 </div>
 
 <footer class="footer">
