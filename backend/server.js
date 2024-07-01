@@ -80,20 +80,15 @@ app.get('/admin', estAdmin, (req, res) => {
     res.sendFile(path.join(__dirname, 'Product/view/adminProduct.html'));
 });
 
-// // Route pour la page de contact
-// app.get('/contact', (req, res) => {
-//     res.sendFile(path.join(__dirname, '../frontend/contact.html'));
-// });
-
 // Route pour la page de panier
 app.get('/cart', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/cart.html'));
 });
 
-
 app.listen(port, '0.0.0.0', () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
+
 
 //Style -----> css
 app.get('/styleBase', (req, res) => {
