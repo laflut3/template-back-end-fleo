@@ -11,7 +11,8 @@ const productRoutes = require('./Product/route/productPath'); // Assurez-vous qu
 const middleAuth = require('./User/middleware/middleAuth');
 const { estAdmin } = require('./User/middleware/middleAuth'); // Modifier ici
 const cartRoutes = require('./User/route/panierPath');
-const contactRoutes = require('./User/route/contact'); // Ajoutez cette ligne
+const contactRoutes = require('./User/route/contact');
+const reviewRoutes = require('./Product/route/reviewPath');
 
 dotenv.config();
 
@@ -49,6 +50,7 @@ app.use('/auth', authRoutes);
 app.use('/products', productRoutes);
 app.use('/cart', cartRoutes); // Ajoutez cette ligne
 app.use('/contact', contactRoutes);
+app.use('/reviews', reviewRoutes);
 
 // Route pour la page de contact
 app.get('/contact', (req, res) => {
@@ -84,6 +86,12 @@ app.get('/admin', estAdmin, (req, res) => {
 app.get('/cart', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/cart.html'));
 });
+
+// Route pour la page À propos
+app.get('/about', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/about.html'));
+});
+
 
 app.listen(port, '0.0.0.0', () => {
     console.log(`Server is running on http://localhost:${port}`);

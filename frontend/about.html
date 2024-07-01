@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À propos</title>
+    <link rel="stylesheet" href="/styleBase">
+</head>
+
+<body>
+<header class="header">
+    <h1>À propos de nous</h1>
+</header>
+
+<div id="BlocLog">
+    <a href="/login" id="lienLog">Connexion</a>
+    <div id="profile" style="display: none;">
+        <div class="profile-image-container">
+            <img id="profile-image" class="profile-image hidden" alt="Image de profil">
+            <div id="profile-initials" class="profile-initials hidden"></div>
+        </div>
+    </div>
+    <a href="/cart" id="cartLink" class="cart-link">Panier</a>
+</div>
+
+<div class="nav">
+    <a href="/">Accueil</a>
+    <a href="/contact">Contact</a>
+    <a href="/about">À propos</a>
+    <a href="/admin" id="adminLink" style="display: none;">Admin</a>
+</div>
+
+<div class="container">
+    <section class="about-section">
+        <h2>Qui sommes-nous ?</h2>
+        <p>Nous sommes une entreprise dédiée à fournir des produits de haute qualité à nos clients. Notre mission est de rendre le shopping en ligne facile et agréable.</p>
+    </section>
+    <section class="testimonial-section">
+        <h2>Témoignages</h2>
+        <div class="testimonial-form">
+            <form id="reviewForm">
+                <textarea id="reviewContent" placeholder="Votre avis"></textarea>
+                <button type="submit">Poster</button>
+            </form>
+        </div>
+        <div id="reviews">
+            <!-- Les avis seront ajoutés ici par le script JavaScript -->
+        </div>
+    </section>
+</div>
+
+<footer class="footer">
+    <p>&copy; 2024 Site E-Commerce Basique</p>
+</footer>
+<script src="/js/main.js"></script>
+<script src="/js/reviews.js"></script>
+</body>
+
+</html>

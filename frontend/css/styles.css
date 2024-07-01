@@ -248,3 +248,65 @@ body {
     padding: 10px;
     border-radius: 4px;
 }
+
+.testimonial-form {
+    margin: 20px 0;
+}
+
+#reviewForm {
+    display: flex;
+    flex-direction: column;
+}
+
+#reviewForm textarea {
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#reviewForm button {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#reviewForm button:hover {
+    background-color: #555;
+}
+
+.review {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.review-content {
+    font-style: italic;
+    margin-bottom: 10px;
+}
+
+.review-author {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.review-response {
+    background-color: #e9e9e9;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.review-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
